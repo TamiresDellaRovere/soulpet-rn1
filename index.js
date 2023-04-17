@@ -14,6 +14,7 @@ app.use(express.json()); //Possibilitar transitar dados usando JSON;
 
 
 
+
 //Configuração do Banco de Dados;
 const {connection, authenticate, autenticacao} = require("./database/database");
 autenticacao(connection); // efetivar a conexão;
@@ -23,7 +24,32 @@ const Endereco = require("./database/endereco");
 
 
 
+
 //Definição de rotas;
+app.get("/clientes", async (req, res) => {
+    // SELECT * FROM clientes; -> vai ter a mesma função
+    const listaClientes = await Cliente.findAll();
+    res.json(listaClientes);
+}); // "/clientes" -> mesma rota pois essa é apenas leitura. -> app.get
+
+// /clientes/5 -> cliente no id 5 
+app.get ("/clientes/:id", async (req, res) => {
+    // SELECT * FROM clientes WHERE id = 5; -> codigo no MySQL
+    const cliente = await Cliente.findOne({
+        where: {id: req.params.id },
+        include: [Endereco], //trás junto os dados de endereço;
+    });
+    // findOne -> vai achar um cliente dentro de Cliente, where -> onde , id: req.params.id -> id do cliente inserido na rota;
+
+    if (cliente) {
+        res.json(cliente);
+    } else {
+        res.status(404).json({message: "Usuário não encontrado."});
+    }
+});
+
+
+
 app.post("/clientes", async(req, res) => {
     const {nome, email, telefone, endereco } = req.body; //Coletar os dados do req.body;
 
@@ -38,7 +64,9 @@ app.post("/clientes", async(req, res) => {
         console.log(err);
         res.status(500).json({message: "um erro aconteceu."});
     }
-}); // tem que ter o try catch para não travar o código, ele para o código e retorna o erro caso não de certo;
+    // tem que ter o try catch para não travar o código, ele para o código e retorna o erro caso não de certo;
+}); // "/clientes" -> mesma rota pois essa é para inserir dados. -> app.post
+
 
 
 
@@ -49,6 +77,3 @@ app.listen(3000, () => {
     connection.sync({force: true}) // Gerar as tabelas a partir do model;
     console.log("Servidor rodando em http://localhost:3000")
 });
-
-
-

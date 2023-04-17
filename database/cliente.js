@@ -40,15 +40,6 @@ module.exports = Cliente;
 
 
 
-
-
-
-
-
-
-
-
-
 // const cliente = {
 //     // coluna: "valor"
 //     nome: "Tamires Sanchez", //VARCHAR no MySQL

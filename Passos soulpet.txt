@@ -1,0 +1,46 @@
+Montagem da aplicação com Express-ORM-MySQL (passo a passo)
+
+1) Criar uma pasta para o projeto: soulpet-rn1;
+2) Rodar o comando `npm init -y`;
+3) Instalar todas as dependências necessárias: `npm install express dotenv mysql2 sequelize morgan`;
+4) Configurar o script npm start com nodemon;
+5-) Configurar as variaveis de ambiente (dados para acessar o banco de dados);
+6-) Fazer conexão com o banco de dados;
+7-) Definição dos Models (modelagem de software)
+
+
+-----------------------------------------------------------------------------------------------------
+* express = backend;
+* dotenv = variáveis de ambiente;
+* MySQL2 & sequelize = comunicação com base de dados;
+* morgan = logs;
+
+
+---------------------------------------------------------------------------
+.env => Arquivo de variaveis ambientes:
+NOME_VARIAVEL= valor;
+
+// Puxa a informação do arquivo .env no index.js
+// console.log(process.env.SENHA_BATATA);
+
+
+---------------------------------------------------------------------------
+Biblioteca Sequelize
+ORM => Object-Relational Mapper
+- gerar automaticamente as tabelas de banco;
+- inserir dados;
+- atualizar dados;
+- deletar dados;
+- consultar/filtar dados;
+
+
+---------------------------------------------------------------------------
+GET (/clientes) => Listagem de todos os clientes
+POST (/clientes) => Inserir cliente novo
+PUT (/clientes) => Atualizar cliente existente
+DELETE (/clientes) => Apagar cliente existente
+
+
+---------------------------------------------------------------------------
+CRUD =>   CREAT    READ    UPDATE     DELETE
+	    CRIAR   LISTAR  ATUALIZAR   DELETAR
