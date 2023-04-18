@@ -34,6 +34,9 @@ const Endereco = require("./endereco");
 Cliente.hasOne(Endereco); // cliente tem um Endereço
 Endereco.belongsTo(Cliente); // endereço pertence a um Client
 
+//has é a chave que vai ser importada -> ex:(id)
+//belongs é o que vai receber a chave estrangeira -> ex:(ClienteId)
+
 
 module.exports = Cliente;
 

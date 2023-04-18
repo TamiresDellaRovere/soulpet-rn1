@@ -18,6 +18,7 @@ const {connection, authenticate, autenticacao} = require("./database/database");
 autenticacao(connection); // efetivar a conexão;
 const Cliente = require("./database/cliente"); // Após criar o o arquivo Cliente.Js, importar para o index.js, logo abaixo da função de configuração do Database;
 const Endereco = require("./database/endereco"); // Após criar o o arquivo Endereco.Js, importar para o index.js, logo abaixo da função de configuração do Database;
+const Pet = require ("./database/pet") // Após criar o o arquivo Pet.Js, importar para o index.js, logo abaixo da função de configuração do Database;
 
 
 
