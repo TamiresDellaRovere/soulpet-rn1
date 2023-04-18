@@ -4,11 +4,9 @@ const express = require("express")
 
 
 
-
 //Configuração do App;
 const app = express();
 app.use(express.json()); //Possibilitar transitar dados usando JSON;
-
 
 
 
@@ -26,12 +24,16 @@ const Pet = require ("./database/pet") // Após criar o o arquivo Pet.Js, import
 
 //Definição de rotas;
 
+
+//INICIO ROTAS CLIENTES
+
 //ver os clientes cadastrados
 app.get("/clientes", async (req, res) => {
     // SELECT * FROM clientes; -> vai ter a mesma função
     const listaClientes = await Cliente.findAll();
     res.json(listaClientes);
 }); // "/clientes" -> mesma rota pois essa é apenas leitura. -> app.get
+
 
 
 
@@ -54,6 +56,7 @@ app.get ("/clientes/:id", async (req, res) => {
 
 
 
+
 // inserir dados no cliente.
 app.post("/clientes", async(req, res) => {
     // obter dados do corpo da requisição
@@ -72,6 +75,7 @@ app.post("/clientes", async(req, res) => {
     }
     // tem que ter o try catch para não travar o código, ele para o código e retorna o erro caso não de certo;
 }); // "/clientes" -> mesma rota pois essa é para inserir dados. -> app.post
+
 
 
 
@@ -119,6 +123,53 @@ app.delete("/clientes/:id", async (req, res) => {
     };
 });
 
+//FINAL ROTAS CLIENTES
+
+
+
+//FINAL ROTAS PETS
+
+//inserir dados pet
+app.post("/pets", async (req, res) => {
+    const {nome, tipo, porte, data_nasc, clienteId } = req.body;
+
+    try {
+        const petCliente = await Cliente.findByPk(clienteId); // findByPk substitui o Cliente.findOne({ where: { id: clienteId }});
+        if (petCliente) {
+            const pet = await Pet.create({ nome, tipo, porte, data_nasc, clienteId });
+            res.status(201).json(pet);
+        } else {
+            res.status(404).json({ message: "Cliente não encontrado." });
+        }
+    } 
+    catch (err) {
+        console.error(err) // console.error escreve em vermelho no terminal;
+        res.status(500).json({message: "Um erro aconteceu."});
+    }
+});
+
+
+
+
+//consultar todos os pets existentes
+app.get("/pets", async (req, res) => {
+    const listaPets = await Pet.findAll();
+    res.json(listaPets);
+});
+
+
+
+//consultar os pets por id
+app.get("/pets/:id", async (req, res) => {
+    const { id } = req.params;
+
+    const buscarPet = await Pet.findByPk(id);
+    if(buscarPet) {
+        res.json(buscarPet);
+    }else {
+        res.status(404).json({ message: "Pet não encontrado."});
+    }
+});
 
 
 
