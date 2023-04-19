@@ -31,8 +31,8 @@ const Endereco = require("./endereco");
 // cliente tem um Endereço
 // Endereço ganha uma chave estrangeira (nome do model + id) -> aqui no caso é "cliente_id"
 // Chave estrangeira = clienteId
-Cliente.hasOne(Endereco); // cliente tem um Endereço
-Endereco.belongsTo(Cliente); // endereço pertence a um Client
+Cliente.hasOne(Endereco, { onDelete: "CASCADE"}); // Cliente tem um Endereço, { onDelete: "CASCADE"} -> quando esse cliente for apagado, o endereço também vai ser apagado;
+Endereco.belongsTo(Cliente); // Endereço pertence a um Client
 
 //has é a chave que vai ser importada -> ex:(id)
 //belongs é o que vai receber a chave estrangeira -> ex:(ClienteId)
