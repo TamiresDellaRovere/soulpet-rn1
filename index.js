@@ -1,12 +1,14 @@
 //Importações principais e variáveis de ambiente;
 require("dotenv").config();// Vai disponibilizar o uso de variaveis de ambiente;
-const express = require("express")
+const express = require("express");
+const morgan = require("morgan");
 
 
 
 //Configuração do App;
 const app = express();
 app.use(express.json()); //Possibilitar transitar dados usando JSON;
+app.use(morgan("dev")); // Retorna no console as requisições que foram feitas (GET, POST, PUT, DELETE), os status das requisições(200, 404, 500), o tempo que levou e o tamanho da resposta;
 
 
 
@@ -30,6 +32,6 @@ app.use(rotasPets); // -> informa ao express que é para utilizar as rotas dos a
 //Escuta de eventos (listen);
 app.listen(3000, () => {
     // Force = apaga tudo e recria as tabelas;
-    connection.sync({ force: true }) // Gerar as tabelas a partir do model;
+    connection.sync() //{ force: true } //Gerar as tabelas a partir do model;
     console.log("Servidor rodando em http://localhost:3000")
 });
